@@ -12,7 +12,7 @@ public class LaptopshopApplication {
 		// SpringApplication.run(LaptopshopApplication.class, args);
 		ApplicationContext hoidanit = SpringApplication.run(LaptopshopApplication.class, args);
 		for (String s : hoidanit.getBeanDefinitionNames()) {
-			System.out.println(s);
+			// System.out.println(s);
 		}
 	}
 
