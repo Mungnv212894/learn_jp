@@ -18,14 +18,7 @@
         </head>
 
         <body>
-            <h1>Hello web_app</h1>
-            <h1>
-                ${mung}
-            </h1>
-            <h2>
-                ${thu}
-            </h2>
-            <button class="btn btn-warning">Submit</button>
+
         </body>
 
         </html>
