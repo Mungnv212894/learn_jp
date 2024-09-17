@@ -24,12 +24,12 @@ public class UserService {
     }
 
     public List<User> getAllUsersByEmail(String email) {
-        return this.userRepository.findByEmail(email);
+        return this.userRepository.findOneByEmail(email);
     }
 
     public User handleSaveUser(User user) {
         User thu = this.userRepository.save(user);
-        System.out.println();
+        System.out.println(thu);
         return thu;
     }
 }
