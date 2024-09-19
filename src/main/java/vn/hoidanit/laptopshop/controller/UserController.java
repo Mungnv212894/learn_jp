@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -56,6 +58,40 @@ public class UserController {
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
     public String createUserPage(Model model, @ModelAttribute("newUser") User mung) {
         this.userService.handleSaveUser(mung);
+        return "redirect:/admin/user";
+    }
+
+    @RequestMapping("/admin/user/update/{id}") // GET
+    public String getUpdateUserPage(Model model, @PathVariable long id) {
+        User currentUser = this.userService.getUserById(id);
+        model.addAttribute("newUser", currentUser);
+        return "admin/user/update";
+    }
+
+    @PostMapping("/admin/user/update")
+    public String postUpdateUser(Model model, @ModelAttribute("newUser") User mung) {
+        User currentUser = this.userService.getUserById(mung.getId());
+        if (currentUser != null) {
+            currentUser.setAddress(mung.getAddress());
+            currentUser.setFullName(mung.getFullName());
+            currentUser.setPhone(mung.getPhone());
+            this.userService.handleSaveUser(currentUser);
+        }
+        return "redirect:/admin/user";
+    }
+
+    @GetMapping("admin/user/delete/{id}")
+    public String getDeleteUserPage(Model model, @PathVariable long id) {
+        model.addAttribute("id", id);
+        User user = new User();
+        user.setId(id);
+        model.addAttribute("newUser", user);
+        return "admin/user/delete";
+    }
+
+    @PostMapping("admin/user/delete")
+    public String postDeleteUser(Model model, @ModelAttribute("newUser") User thu) {
+        this.userService.deleteAUser(thu.getId());
         return "redirect:/admin/user";
     }
 }
